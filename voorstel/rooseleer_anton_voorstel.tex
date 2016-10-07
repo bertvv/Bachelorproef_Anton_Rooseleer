@@ -1,0 +1,150 @@
+%==============================================================================
+% Sjabloon onderzoeksvoorstel bachelorproef
+%==============================================================================
+% Gebaseerd op LaTeX-sjabloon ‘Stylish Article’ (zie voorstel.cls)
+% Auteur: Jens Buysse, Bert Van Vreckem
+
+% TODO: Compileren document:
+% 1) Vervang ‘naam_voornaam’ in de bestandsnaam door je eigen naam, bv.
+%    buysse_jens_voorstel.tex
+% 2) pdflatex naam_voornaam_voorstel.tex (2 keer)
+% 3) biber naam_voornaam_voorstel
+% 4) pdflatex naam_voornaam_voorstel.tex (1 keer)
+
+\documentclass[fleqn,10pt]{voorstel}
+
+%------------------------------------------------------------------------------
+% Metadata over het artikel
+%------------------------------------------------------------------------------
+
+\JournalInfo{HoGent Bedrijf en Organisatie}
+\Archive{Bachelorproef 2016 - 2017}
+
+%---------- Titel & auteur ----------------------------------------------------
+
+% TODO: geef werktitel van je eigen voorstel op
+\PaperTitle{Het verschil in performantie tussen HTTP over TCP en HTTP/2 over QUIC.}
+\PaperType{Onderzoeksvoorstel Bachelorproef} % Type document
+
+% TODO: vul je eigen naam in als auteur, geef ook je emailadres mee!
+% TODO: vul de naam van je co-promotor(en) in als tweede (derde, ...) auteur.
+% Dien je voorstel pas in nadat je co-promotor de kans gehad heeft na te lezen
+% en feedback te geven!
+\Authors{Anton Rooseleer\textsuperscript{1}} % Authors
+\affiliation{\textbf{Contact:}
+  \textsuperscript{1} \href{mailto:jens.buysse@hogent.be}{jens.buysse@hogent.be};
+  \textsuperscript{2} \href{mailto:bert.vanvreckem@hogent.be}{bert.vanvreckem@hogent.be}}
+
+%---------- Abstract ----------------------------------------------------------
+
+\Abstract{
+De grootte van de gemiddelde website blijft elk jaar groeien.
+\par
+Het webverkeer naar deze websites gebeurt nog steeds grotendeels via het klassieke HTTP-protocol
+over TCP. Er zijn echter al alternatieve versies voor het HTTP-protocol zoals het SPDY-protocol ontwikkeld door Google
+en het verbeterde HTTP/2 protocol dat zich hierop baseert. Verder heeft Google ook het nieuwe protocol QUIC gelanceerd
+die het TCP protocol hoopt te vervangen.
+\par
+Aangezien dat de websites steeds groter worden is het van groot belang dat er een gedetailleerde vergelijking komt tussen deze protocollen om de huidige performantie te behouden of zelfs te verbeteren.
+Dit onderzoek zal het verschil in performantie tussen de verschillende protocollen in verschillende
+omstandigheden weergeven en hiervan de voor- en nadelen aantonen.
+}
+
+%---------- Onderzoeksdomein en sleutelwoorden --------------------------------
+% TODO: Sleutelwoorden:
+%
+% Het eerste sleutelwoord beschrijft het onderzoeksdomein. Je kan kiezen uit
+% deze lijst:
+%
+% - Mobiele applicatieontwikkeling
+% - Webapplicatieontwikkeling
+% - Applicatieontwikkeling (andere)
+% - Systeem- en netwerkbeheer
+% - Mainframe
+% - E-business
+% - Databanken en big data
+% - Machine learning en kunstmatige intelligentie
+% - Andere (specifieer)
+%
+% De andere sleutelwoorden zijn vrij te kiezen
+
+\Keywords{Web development. Performantie  --- QUIC --- HTTP/2} % Keywords
+\newcommand{\keywordname}{Sleutelwoorden} % Defines the keywords heading name
+
+%---------- Titel, inhoud -----------------------------------------------------
+\begin{document}
+
+\flushbottom % Makes all text pages the same height
+\maketitle % Print the title and abstract box
+\tableofcontents % Print the contents section
+\thispagestyle{empty} % Removes page numbering from the first page
+
+%------------------------------------------------------------------------------
+% Hoofdtekst
+%------------------------------------------------------------------------------
+
+%---------- Inleiding ---------------------------------------------------------
+
+\section{Introductie} % The \section*{} command stops section numbering
+\label{sec:introductie}
+
+In het jaar 2011 was de gemiddelde grootte van een website 816kb. 
+Na 5 jaar is de grootte van de gemiddelde website al verdrievoudigd naar 2480kb.
+De grootte van de gemiddelde website blijft elk jaar groeien.
+In het jaar 2015-2016 groeide de gemiddelde website met 15\%.
+
+Het webverkeer naar deze websites gebeurt nog steeds grotendeels via het klassieke HTTP-protocol
+over TCP. Er zijn echter al alternatieve versies voor het HTTP-protocol zoals het SPDY-protocol ontwikkeld door Google
+en het verbeterde HTTP/2 protocol dat zich hierop baseert. Verder heeft Google ook het nieuwe protocol QUIC gelanceerd
+die het TCP protocol hoopt te vervangen.
+
+Dit onderzoek zal weergeven of het performant is om nu over te schakelen naar HTTP/2 over QUIC of te blijven werken met de klassieke HTTP over TCP.
+%---------- Stand van zaken ---------------------------------------------------
+
+\section{Literatuurstudie}
+\label{sec:Literatuurstudie}
+De thesis \emph{Designing a better transport protocol for the web; 
+QuicShell} door \emph{Das, Somak R} van de universiteit\emph{ Massachusetts Institute of Technology} zal een zeer interessante bron zijn voor dit onderzoek. In deze thesis bestudeert De heer \emph{Das, Somak R} de performantie van QUIC op een webpagina.
+
+Het verschil tussen zijn onderzoek en dit onderzoek is dat hij enkel
+HTTP/1.1, SPDY, en QUIC onderzocht. Verder vergeleek hij ook deze 3  protocollen apart van elkaar. In dit onderzoek zullen we de combinatie van HTTP/2 over QUIC vergelijken met de klassieke combinatie van HTTP over TCP. 
+
+desalniettemin is er veel te leren uit het werk van De heer \emph{Das, Somak R}.
+
+% Voor literatuurverwijzingen zijn er twee belangrijke commando's:
+% \autocite{KEY} => (Auteur, jaartal) Gebruik dit als de naam van de auteur
+%   geen onderdeel is van de zin.
+% \textcite{KEY} => Auteur (jaartal)  Gebruik dit als de auteursnaam wel een
+%   functie heeft in de zin (bv. ``Uit onderzoek door Doll & Hill (1954) bleek
+%   ...'')
+
+
+%---------- Methodologie ------------------------------------------------------
+\section{Methodologie}
+\label{sec:methodologie}
+
+Voor dit onderzoek zal een webserver worden geconfigureerd om 
+enerzijds met de klassieke protocols te werken (HTTP 1.1 en TLS 1.2 over TCP) en anderzijds met de nieuwe (HTTP/2 over QUIC). Op deze webserver zal eenzelfde website worden gehost. Nadien zullen we de verschillen in het berichtverkeer tussen de client en server onderzoeken voor de twee verschillende configuraties in verschillende situaties. Voor dit onderzoek zullen we als server de HTTP/2 webserver Caddy gebruiken, de browser Google Chrome als client en Wireshark om het berichtverkeer te onderzoeken. 
+
+%---------- Verwachte resultaten ----------------------------------------------
+\section{Verwachte resultaten}
+\label{sec:verwachte_resultaten}
+
+We zullen het verschil in snelheid waarmee een pagina wordt geladen via zowel HTTP over TCP als HTTP/2 over QUIC onderzoeken. Verder zullen we het soort van pakketten die tussen de client en server worden verzonden onderzoeken en we zullen hierbij de hoeveelheid verstuurde bytes en de effectieve data vergelijken.
+%---------- Verwachte conclusies ----------------------------------------------
+\section{Verwachte conclusies}
+\label{sec:verwachte_conclusies}
+
+We verwachte dat de combinatie van HTTP/2 over QUIC performanter zal zijn als die van HTTP over TCP. Aangezien er steeds meer en meer objecten op de gemiddelde webpagina komen moeten er ook steeds meer en meer connecties gemaakt worden. Deze verschillende connecties zorgen ervoor dat er steeds meer overhead is en dus dat de hoeveelheid verzonden bytes veel groter zal zijn als de grootte van de effectieve data. We verwachten dat het verkleinen van de overhead een positief effect zal hebben op de snelheid waarmee een webpagina laadt. 
+%------------------------------------------------------------------------------
+% Referentielijst
+%------------------------------------------------------------------------------
+% TODO: de gerefereerde werken moeten in BibTeX-bestand ``biblio.bib''
+% voorkomen. Gebruik JabRef om je bibliografie bij te houden en vergeet niet
+% om compatibiliteit met Biber/BibLaTeX aan te zetten (File > Switch to
+% BibLaTeX mode)
+
+\phantomsection
+\printbibliography[heading=bibintoc]
+
+\end{document}
