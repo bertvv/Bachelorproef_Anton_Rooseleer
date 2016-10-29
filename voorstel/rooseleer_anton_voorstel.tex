@@ -1,3 +1,4 @@
+\bibliography{rooseleer_anton_voorstel}
 %==============================================================================
 % Sjabloon onderzoeksvoorstel bachelorproef
 %==============================================================================
@@ -12,7 +13,6 @@
 % 4) pdflatex naam_voornaam_voorstel.tex (1 keer)
 
 \documentclass[fleqn,10pt]{voorstel}
-
 %------------------------------------------------------------------------------
 % Metadata over het artikel
 %------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ omstandigheden weergeven en hiervan de voor- en nadelen aantonen.
 
 \Keywords{Web development. Performantie  --- QUIC --- HTTP/2} % Keywords
 \newcommand{\keywordname}{Sleutelwoorden} % Defines the keywords heading name
-
+\bibliography{biblio}
 %---------- Titel, inhoud -----------------------------------------------------
 \begin{document}
 
@@ -104,7 +104,7 @@ Dit onderzoek zal weergeven of het performant is om nu over te schakelen naar HT
 \section{Literatuurstudie}
 \label{sec:Literatuurstudie}
 De thesis \emph{Designing a better transport protocol for the web; 
-QuicShell} door \emph{Das, Somak R} van de universiteit\emph{ Massachusetts Institute of Technology} zal een zeer interessante bron zijn voor dit onderzoek. In deze thesis bestudeert De heer \emph{Das, Somak R} de performantie van QUIC op een webpagina.
+QuicShell} door \emph{Das, Somak R} van de universiteit\emph{ Massachusetts Institute of Technology} zal een zeer interessante bron zijn voor dit onderzoek. In deze thesis bestudeert De heer \emph{Das, Somak R} de performantie van QUIC op een webpagina.\cite{PaperDas}
 
 Het verschil tussen zijn onderzoek en dit onderzoek is dat hij enkel
 HTTP/1.1, SPDY, en QUIC onderzocht. Verder vergeleek hij ook deze 3  protocollen apart van elkaar. In dit onderzoek zullen we de combinatie van HTTP/2 over QUIC vergelijken met de klassieke combinatie van HTTP over TCP. 
@@ -145,6 +145,6 @@ We verwachte dat de combinatie van HTTP/2 over QUIC performanter zal zijn als di
 % BibLaTeX mode)
 
 \phantomsection
-\printbibliography[heading=bibintoc]
 
+\printbibliography[heading=bibintoc]
 \end{document}

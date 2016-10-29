@@ -50,7 +50,14 @@ apt-get update
 apt-get -y install apache2
 
 info "Start Apache and enable at boot"
+# point /var/www at /vagrant mount
+if ! [ -L /var/www ]; then
+  rm -rf /var/www
+  ln -fs /vagrant /var/www
+fi
 
+# restart apache
+/etc/init.d/apache2 restart
 systemctl start apache2.service
 systemctl enable apache2.service
 
