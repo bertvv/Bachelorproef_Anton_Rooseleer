@@ -45,3 +45,6 @@ info() {
 # Script proper
 
 apt-get update
+cd /vagrant
+chmod a=rx caddy
+./caddy
