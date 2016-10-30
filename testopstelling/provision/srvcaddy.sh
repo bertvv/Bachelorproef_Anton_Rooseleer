@@ -45,6 +45,8 @@ info() {
 # Script proper
 
 apt-get update
+ulimit -n 8192
 cd /vagrant
 chmod a=rx caddy
 ./caddy
+
