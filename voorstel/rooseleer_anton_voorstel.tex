@@ -32,7 +32,7 @@
 % en feedback te geven!
 \Authors{Anton Rooseleer\textsuperscript{1},bert Van Vreckem\textsuperscript{2}} % Authors
 \affiliation{\textbf{Contact:}
-  \textsuperscript{1} \href{mailto: anton.rooseleer.u9007@student.hogent.be}{ anton.rooseleer.u9007@student.hogent.be};
+  \textsuperscript{1} \href{mailto: anton.rooseleer.u9007@student.hogent.be}{ anton.rooseleer.u9007@student.hogent.be},
   \textsuperscript{2} \href{mailto:bert.vanvreckem@hogent.be}{bert.vanvreckem@hogent.be}}
 
 %---------- Abstract ----------------------------------------------------------
@@ -47,7 +47,7 @@ die het TCP protocol hoopt te vervangen.
 \par
 Aangezien dat de websites steeds groter worden is het van groot belang dat er een gedetailleerde vergelijking komt tussen deze protocollen om de huidige performantie te behouden of zelfs te verbeteren.
 Dit onderzoek zal het verschil in performantie tussen de verschillende protocollen in verschillende
-omstandigheden weergeven en hiervan de voor- en nadelen aantonen.
+omstandigheden weergeven en hiervan de voor- en nadelen aantonen. In dit onderzoek zal ik de hoeveelheid verzonden bytes voor de 2 combinaties (http over tcp en http/2 over quic) vergelijken met de hoeveelheid actuele data die we verzenden.
 }
 
 %---------- Onderzoeksdomein en sleutelwoorden --------------------------------
@@ -107,7 +107,7 @@ De thesis \emph{Designing a better transport protocol for the web;
 QuicShell} door \emph{Das, Somak R} van de universiteit\emph{ Massachusetts Institute of Technology} zal een zeer interessante bron zijn voor dit onderzoek. In deze thesis bestudeert De heer \emph{Das, Somak R} de performantie van QUIC op een webpagina.\cite{PaperDas}
 
 Het verschil tussen zijn onderzoek en dit onderzoek is dat hij enkel
-HTTP/1.1, SPDY, en QUIC onderzocht. Verder vergeleek hij ook deze 3  protocollen apart van elkaar. In dit onderzoek zullen we de combinatie van HTTP/2 over QUIC vergelijken met de klassieke combinatie van HTTP over TCP. 
+HTTP/1.1, SPDY, en QUIC onderzocht. Verder vergeleek hij ook deze 3  protocollen apart van elkaar. Deze paper onderzoekt de combinatie van HTTP/2 over QUIC en vergelijkt deze met de klassieke combinatie van HTTP over TCP. 
 
 desalniettemin is er veel te leren uit het werk van De heer \emph{Das, Somak R}.
 
@@ -124,18 +124,26 @@ desalniettemin is er veel te leren uit het werk van De heer \emph{Das, Somak R}.
 \label{sec:methodologie}
 
 Voor dit onderzoek zal een webserver worden geconfigureerd om 
-enerzijds met de klassieke protocols te werken (HTTP 1.1 en TLS 1.2 over TCP) en anderzijds met de nieuwe (HTTP/2 over QUIC). Op deze webserver zal eenzelfde website worden gehost. Nadien zullen we de verschillen in het berichtverkeer tussen de client en server onderzoeken voor de twee verschillende configuraties in verschillende situaties. Voor dit onderzoek zullen we als server de HTTP/2 webserver Caddy gebruiken, de browser Google Chrome als client en Wireshark om het berichtverkeer te onderzoeken. 
+enerzijds met de klassieke protocols te werken (HTTP 1.1 en TLS 1.2 over TCP) en anderzijds met de nieuwe (HTTP/2 over QUIC). Op deze webserver zal eenzelfde website worden gehost. Nadien zullen we de verschillen in het berichtverkeer tussen de client en server onderzoeken voor de twee verschillende configuraties in verschillende situaties.
+We zullen het verschil in snelheid waarmee een pagina wordt
+geladen via zowel HTTP over TCP als HTTP/2 over QUIC
+onderzoeken. Verder zullen we het soort van pakketten die
+tussen de client en server worden verzonden onderzoeken
+en we zullen hierbij de hoeveelheid verstuurde bytes en de
+effectieve data vergelijken.
+Voor dit onderzoek zullen we als server de HTTP/2 webserver Caddy gebruiken, de browser Google Chrome als client en Wireshark om het berichtverkeer te onderzoeken. 
+
 
 %---------- Verwachte resultaten ----------------------------------------------
 \section{Verwachte resultaten}
 \label{sec:verwachte_resultaten}
+In deze paper verwacht ik tot vinden voor welke niveau's van latency HTTP/2 over QUIC beter is als HTTP over TCP.
 
-We zullen het verschil in snelheid waarmee een pagina wordt geladen via zowel HTTP over TCP als HTTP/2 over QUIC onderzoeken. Verder zullen we het soort van pakketten die tussen de client en server worden verzonden onderzoeken en we zullen hierbij de hoeveelheid verstuurde bytes en de effectieve data vergelijken.
 %---------- Verwachte conclusies ----------------------------------------------
 \section{Verwachte conclusies}
 \label{sec:verwachte_conclusies}
 
-We verwachte dat de combinatie van HTTP/2 over QUIC performanter zal zijn als die van HTTP over TCP. Aangezien er steeds meer en meer objecten op de gemiddelde webpagina komen moeten er ook steeds meer en meer connecties gemaakt worden. Deze verschillende connecties zorgen ervoor dat er steeds meer overhead is en dus dat de hoeveelheid verzonden bytes veel groter zal zijn als de grootte van de effectieve data. We verwachten dat het verkleinen van de overhead een positief effect zal hebben op de snelheid waarmee een webpagina laadt. 
+We \cite{websiteStats} verwachte dat de combinatie van HTTP/2 over QUIC performanter zal zijn als die van HTTP over TCP. Aangezien er steeds meer en meer objecten op de gemiddelde webpagina komen moeten er ook steeds meer en meer connecties gemaakt worden. Deze verschillende connecties zorgen ervoor dat er steeds meer overhead is en dus dat de hoeveelheid verzonden bytes veel groter zal zijn als de grootte van de effectieve data. We verwachten dat het verkleinen van de overhead een positief effect zal hebben op de snelheid waarmee een webpagina laadt. 
 %------------------------------------------------------------------------------
 % Referentielijst
 %------------------------------------------------------------------------------
@@ -145,6 +153,5 @@ We verwachte dat de combinatie van HTTP/2 over QUIC performanter zal zijn als di
 % BibLaTeX mode)
 
 \phantomsection
-
 \printbibliography[heading=bibintoc]
 \end{document}
