@@ -91,7 +91,7 @@ omstandigheden weergeven en hiervan de voor- en nadelen aantonen. In dit onderzo
 In het jaar 2011 was de gemiddelde grootte van een website 816kb. 
 Na 5 jaar is de grootte van de gemiddelde website al verdrievoudigd naar 2480kb.
 De grootte van de gemiddelde website blijft elk jaar groeien.
-In het jaar 2015-2016 groeide de gemiddelde website met 15\%.
+In het jaar 2015-2016 groeide de gemiddelde website met 15\%\autocite{websiteStats}.
 
 Het webverkeer naar deze websites gebeurt nog steeds grotendeels via het klassieke HTTP-protocol
 over TCP. Er zijn echter al alternatieve versies voor het HTTP-protocol zoals het SPDY-protocol ontwikkeld door Google
@@ -104,7 +104,7 @@ Dit onderzoek zal weergeven of het performant is om nu over te schakelen naar HT
 \section{Literatuurstudie}
 \label{sec:Literatuurstudie}
 De thesis \emph{Designing a better transport protocol for the web; 
-QuicShell} door \emph{Das, Somak R} van de universiteit\emph{ Massachusetts Institute of Technology} zal een zeer interessante bron zijn voor dit onderzoek. In deze thesis bestudeert De heer \emph{Das, Somak R} de performantie van QUIC op een webpagina.\cite{PaperDas}
+QuicShell} door \emph{Das, Somak R} \autocite{PaperDas} van de universiteit\emph{ Massachusetts Institute of Technology} zal een zeer interessante bron zijn voor dit onderzoek. In deze thesis bestudeert De heer \emph{Das, Somak R} de performantie van QUIC op een webpagina.\autocite{PaperDas}
 
 Het verschil tussen zijn onderzoek en dit onderzoek is dat hij enkel
 HTTP/1.1, SPDY, en QUIC onderzocht. Verder vergeleek hij ook deze 3  protocollen apart van elkaar. Deze paper onderzoekt de combinatie van HTTP/2 over QUIC en vergelijkt deze met de klassieke combinatie van HTTP over TCP. 
@@ -142,8 +142,8 @@ In deze paper verwacht ik tot vinden voor welke niveau's van latency HTTP/2 over
 %---------- Verwachte conclusies ----------------------------------------------
 \section{Verwachte conclusies}
 \label{sec:verwachte_conclusies}
-
-We \cite{websiteStats} verwachte dat de combinatie van HTTP/2 over QUIC performanter zal zijn als die van HTTP over TCP. Aangezien er steeds meer en meer objecten op de gemiddelde webpagina komen moeten er ook steeds meer en meer connecties gemaakt worden. Deze verschillende connecties zorgen ervoor dat er steeds meer overhead is en dus dat de hoeveelheid verzonden bytes veel groter zal zijn als de grootte van de effectieve data. We verwachten dat het verkleinen van de overhead een positief effect zal hebben op de snelheid waarmee een webpagina laadt. 
+\citation{PaperDas}
+We verwachte dat de combinatie van HTTP/2 over QUIC performanter zal zijn als die van HTTP over TCP. Aangezien er steeds meer en meer objecten op de gemiddelde webpagina komen moeten er ook steeds meer en meer connecties gemaakt worden. Deze verschillende connecties zorgen ervoor dat er steeds meer overhead is en dus dat de hoeveelheid verzonden bytes veel groter zal zijn als de grootte van de effectieve data. We verwachten dat het verkleinen van de overhead een positief effect zal hebben op de snelheid waarmee een webpagina laadt. 
 %------------------------------------------------------------------------------
 % Referentielijst
 %------------------------------------------------------------------------------

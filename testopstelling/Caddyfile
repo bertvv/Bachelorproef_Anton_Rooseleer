@@ -1,0 +1,5 @@
+https://192.168.56.52  
+log stdout 
+errors stderr 
+tls self_signed 
+tls email  

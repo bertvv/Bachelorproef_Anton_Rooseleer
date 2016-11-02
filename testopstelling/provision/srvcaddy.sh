@@ -48,5 +48,15 @@ apt-get update
 ulimit -n 8192
 cd /vagrant
 chmod a=rx caddy
-./caddy
+touch Caddyfile
+ss -tlnp
+ss -ulnp
+echo  'https://192.168.56.52  ' > Caddyfile
+echo  'log stdout ' >> Caddyfile
+echo  'errors stderr ' >> Caddyfile
+echo  'tls self_signed ' >> Caddyfile
+echo  'tls email  ' >> Caddyfile
+ls
+./caddy -quic
+
 
