@@ -142,8 +142,18 @@ if files_differ "${provisioning_files}/Caddyfile" "${caddy_config}"; then
   cp "${provisioning_files}/Caddyfile" "${caddy_config}"
   chown root:www-data "${caddy_config}"
   chmod 0644 "${caddy_config}"
+
+  if systemctl is-active caddy > /dev/null; then
+    info 'Restarting Caddy'
+    systemctl restart caddy
+  fi
 fi
 
-info 'Starting service'
-systemctl start caddy
-systemctl enable caddy
+if ! systemctl is-active caddy > /dev/null; then
+  info 'Starting Caddy'
+  systemctl start caddy
+fi
+if ! systemctl is-enabled caddy > /dev/null; then
+  info 'Enabling Caddy at boot'
+  systemctl enable caddy
+fi
