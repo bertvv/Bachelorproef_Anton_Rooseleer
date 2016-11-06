@@ -23,6 +23,8 @@ readonly purple='\e[0;35m'
 readonly cyan='\e[0;36m'
 readonly white='\e[0;37m'
 
+ip=192.168.56.52
+download_dir=/tmp/caddy
 #}}}
 
 #{{{ Helper functions
@@ -44,19 +46,48 @@ info() {
 
 # Script proper
 
-apt-get update
-ulimit -n 8192
-cd /vagrant
-chmod a=rx caddy
-touch Caddyfile
-ss -tlnp
-ss -ulnp
-echo  'https://192.168.56.52  ' > Caddyfile
-echo  'log stdout ' >> Caddyfile
-echo  'errors stderr ' >> Caddyfile
-echo  'tls self_signed ' >> Caddyfile
-echo  'tls email  ' >> Caddyfile
-ls
-./caddy -quic
+info "Installing Caddy"
 
+if [ ! -x /usr/local/bin/caddy ]; then
+  apt-get update
+  wget -O /tmp/caddy.tar.gz 'https://caddyserver.com/download/build?os=linux&arch=amd64&features='
+  mkdir "${download_dir}"
+  pushd "${download_dir}"
+  tar xf /tmp/caddy.tar.gz
+  popd
+  cp "${download_dir}/caddy" /usr/local/bin
 
+  info "Installing Systemd service file"
+
+  cp "${download_dir}/init/linux-systemd/caddy.service" /lib/systemd/system
+  systemctl daemon-reload
+else
+  info "  -> Caddy already installed, skipping"
+fi
+
+if [ ! -d /var/www ]; then
+  info " Creating document root"
+  mkdir /var/www
+  chown -R root:www-data /var/www
+  chmod 755 /var/www
+fi
+
+info 'Configuration'
+
+if [ ! -d /etc/caddy ]; then
+  info "  -> Creating configuration directory"
+  mkdir /etc/caddy
+fi
+
+cat > /etc/caddy/Caddyfile << _EOF_
+https://${ip} {
+  root /var/www
+  log stdout
+  errors stderr
+  tls self_signed
+}
+_EOF_
+
+info "Starting service"
+systemctl start caddy
+systemctl enable caddy
