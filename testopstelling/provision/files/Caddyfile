@@ -1,0 +1,9 @@
+# Caddy configuration
+
+https://192.168.56.52 {
+  root /var/www
+  log stdout
+  errors stderr
+
+  tls self_signed
+}
