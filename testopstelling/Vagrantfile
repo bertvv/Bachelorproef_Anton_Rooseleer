@@ -11,10 +11,10 @@ Vagrant.configure("2") do |config|
 
   hosts.each do |host|
     config.vm.define host[:name] do |node|
-	 config.ssh.insert_key = false
+      config.ssh.insert_key = false
       node.vm.hostname = host[:name]
-       node.vm.network :private_network, ip: host[:ip]
-    
+      node.vm.network :private_network, ip: host[:ip]
+
       config.vm.provision 'shell', path: 'provision/' +  host[:name] + '.sh'
     end
   end
