@@ -101,17 +101,6 @@ else
   info '  -> Caddy already installed, skipping'
 fi
 
-#if [ ! -f /etc/sysctl.d/80-caddy.conf ]; then
-  #info 'Ensure file descriptor limit is sufficiently high'
-
-#cat > /etc/sysctl.d/80-caddy.conf << _EOF_
-## Increase file descriptor limit
-#fs.file-max = ${ulimit_filemax}
-#_EOF_
-
-  #sysctl -p
-#fi
-
 ensure_file_exists "${systemd_service_file}"
 if files_differ "${systemd_service_file}" "${provisioning_files}/caddy.service"; then
 
