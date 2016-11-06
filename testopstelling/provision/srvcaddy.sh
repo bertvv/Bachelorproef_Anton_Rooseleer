@@ -23,11 +23,10 @@ readonly purple='\e[0;35m'
 readonly cyan='\e[0;36m'
 readonly white='\e[0;37m'
 
-ip=192.168.56.52
 download_dir=/tmp/caddy
 provisioning_files=/vagrant/provision/files
 systemd_service_file=/lib/systemd/system/caddy.service
-
+caddy_config=/etc/caddy/Caddyfile
 #}}}
 
 #{{{ Helper functions
@@ -53,12 +52,26 @@ info() {
 # Returns with exit status 0 if the files are identical, a nonzero exit status
 # if they differ
 files_differ() {
-  local -r checksum1=$(md5sum "${1}" | cut -c 1-32)
-  local -r checksum2=$(md5sum "${2}" | cut -c 1-32)
+  local file1="${1}"
+  local file2="${2}"
+
+  # If both files exist, compare on checksum
+  local -r checksum1=$(md5sum "${file1}" | cut -c 1-32)
+  local -r checksum2=$(md5sum "${file2}" | cut -c 1-32)
 
   [ "${checksum1}" != "${checksum2}" ]
 }
 
+# Usage: ensure_file_exists FILE
+#
+# If FILE does not exist, creates it
+ensure_file_exists() {
+  local -r file="${1}"
+
+  if [ ! -f "${file}" ]; then
+    touch "${file}"
+  fi
+}
 #}}}
 
 # Script proper
@@ -69,7 +82,7 @@ if [ ! -x /usr/local/bin/caddy ]; then
   # Synchronize package database
   apt-get update
 
-  # Download Caddy installation files 
+  # Download Caddy installation tarballtarballtarball
   wget -O /tmp/caddy.tar.gz 'https://caddyserver.com/download/build?os=linux&arch=amd64&features='
 
   # Unzip installation archive in temporary directory
@@ -78,6 +91,7 @@ if [ ! -x /usr/local/bin/caddy ]; then
   tar xf /tmp/caddy.tar.gz
   popd
   cp "${download_dir}/caddy" /usr/local/bin
+  setcap 'cap_net_bind_service=+ep' /usr/local/bin/caddy
 
   # Cleanup installation files
   rm -rf /tmp/caddy*
@@ -85,10 +99,30 @@ else
   info '  -> Caddy already installed, skipping'
 fi
 
+#if [ ! -f /etc/sysctl.d/80-caddy.conf ]; then
+  #info 'Ensure file descriptor limit is sufficiently high'
+
+#cat > /etc/sysctl.d/80-caddy.conf << _EOF_
+## Increase file descriptor limit
+#fs.file-max = ${ulimit_filemax}
+#_EOF_
+
+  #sysctl -p
+#fi
+
+ensure_file_exists "${systemd_service_file}"
 if files_differ "${systemd_service_file}" "${provisioning_files}/caddy.service"; then
+
   info 'Copying Systemd service file'
   cp "${provisioning_files}/caddy.service" "${systemd_service_file}"
   systemctl daemon-reload
+fi
+
+if [ ! -d /etc/ssl/caddy ]; then
+  info 'Create directory for server certificates'
+  mkdir /etc/ssl/caddy
+  chown -R root:www-data /etc/ssl/caddy
+  chmod 0770 /etc/ssl/caddy
 fi
 
 if [ ! -d /var/www ]; then
@@ -110,14 +144,14 @@ if [ ! -d /etc/caddy ]; then
   mkdir /etc/caddy
 fi
 
-cat > /etc/caddy/Caddyfile << _EOF_
-https://${ip} {
-  root /var/www
-  log stdout
-  errors stderr
-  tls self_signed
-}
-_EOF_
+ensure_file_exists "${caddy_config}"
+
+if files_differ "${provisioning_files}/Caddyfile" "${caddy_config}"; then
+  info 'Copying new version of Caddyfile'
+  cp "${provisioning_files}/Caddyfile" "${caddy_config}"
+  chown root:www-data "${caddy_config}"
+  chmod 0644 "${caddy_config}"
+fi
 
 info 'Starting service'
 systemctl start caddy
