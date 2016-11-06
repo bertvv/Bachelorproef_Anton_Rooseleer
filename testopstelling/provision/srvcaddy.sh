@@ -82,7 +82,7 @@ if [ ! -x /usr/local/bin/caddy ]; then
   # Synchronize package database
   apt-get update
 
-  # Download Caddy installation tarballtarballtarball
+  # Download Caddy installation tarball
   wget -O /tmp/caddy.tar.gz 'https://caddyserver.com/download/build?os=linux&arch=amd64&features='
 
   # Unzip installation archive in temporary directory
@@ -90,6 +90,8 @@ if [ ! -x /usr/local/bin/caddy ]; then
   pushd "${download_dir}"
   tar xf /tmp/caddy.tar.gz
   popd
+
+  # Install binary and set permissions
   cp "${download_dir}/caddy" /usr/local/bin
   setcap 'cap_net_bind_service=+ep' /usr/local/bin/caddy
 
