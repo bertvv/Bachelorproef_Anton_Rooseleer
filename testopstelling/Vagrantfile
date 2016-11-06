@@ -7,7 +7,7 @@ hosts = [
 ]
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "geerlingguy/ubuntu1604"
+  config.vm.box = "kaorimatz/ubuntu-16.04-amd64"
 
   hosts.each do |host|
     config.vm.define host[:name] do |node|
